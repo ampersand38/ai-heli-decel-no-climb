@@ -20,10 +20,16 @@ private _time = cba_missionTime;
 
 {
     private _heli = _x;
+    private _speed = speed _heli;
+    private _altitude = getPosASL _heli # 2;
     if (
         isNull _heli
         || {isPlayer currentPilot _heli}
-        || {speed _heli < MIN_SPEED}
+        || {_speed < MIN_SPEED}
+        || {_altitude < MIN_ALT}
+        || {(getTerrainHeightASL (_heli modelToWorld [0, 500, 0]) + 20) > _altitude}
+        || {(getTerrainHeightASL (_heli modelToWorld [0, 300, 0]) + 20) > _altitude}
+        || {(getTerrainHeightASL (_heli modelToWorld [0, 100, 0]) + 20) > _altitude}
     ) then {
         GVARMAIN(helisDecel) deleteAt (GVARMAIN(helisDecel) find _heli);
         continue;
@@ -42,7 +48,6 @@ private _time = cba_missionTime;
         continue;
     };
 
-    private _speed = speed _heli;
     private _altitude = getPosASL _heli # 2;
     
     private _speedAlt = _heli getVariable [QGVARMAIN(speedAlt), [-1, -1, -1]];
