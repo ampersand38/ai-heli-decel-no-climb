@@ -25,6 +25,7 @@ private _time = cba_missionTime;
     private _radAlt = getPos _heli # 2;
     if (
         isNull _heli
+        || {_heli getVariable [QGVARMAIN(disable), false]}
         || {isPlayer currentPilot _heli}
         || {_speed < MIN_SPEED}
         || {_radAlt < MIN_ALT}
